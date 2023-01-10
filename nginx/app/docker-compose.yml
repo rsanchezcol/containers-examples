@@ -1,0 +1,38 @@
+version: "2.2"
+services:
+   mainless:
+      container_name: mainless
+      image: nginx:$NGINX_VERSION
+      build:
+        context: .
+        dockerfile: ./nginx.Dockerfile
+        x-bake:
+           tags:
+              - app/mainless:latest
+        args:
+            - NGINX_VERSION=$NGINX_VERSION
+            - FILE_BUILD=debian.conf
+   stable:
+      container_name: stable
+      image: nginx:$NGINX_VERSION
+      build:
+        context: .
+        dockerfile: ./nginx.Dockerfile
+        x-bake:
+            tags:
+               - app/stable:latest
+        args:
+            - NGINX_VERSION=$NGINX_VERSION
+            - FILE_BUILD=debian.conf
+   alpine2:
+      container_name: alpine2
+      image: nginx:1.17.9-alpine-perl
+      build:
+        context: .
+        dockerfile: ./nginx.Dockerfile
+        x-bake:
+            tags:
+               - app/alpine2:latest
+        args:
+            - NGINX_VERSION=1.17.9-alpine-perl
+            - FILE_BUILD=alpine.conf
